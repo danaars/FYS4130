@@ -22,6 +22,8 @@ class System_one_D
     std::complex<double> *prod_mag;
     double *C;
 
+    double avg_mag, avg_mag_sqrd;
+
     System_one_D(int size, double temp, double coupling){
         len = size; 
         state = new int [len];
@@ -39,6 +41,8 @@ class System_one_D
         J = coupling;
         p = calculate_prob();
 
+        avg_mag = 0.0;
+        avg_mag_sqrd = 0.0;
     }   // End System_one_D
 
     void printstate(){
@@ -165,6 +169,26 @@ class System_one_D
         
     }   // End get_correlation
 
+    void get_magnetization(){
+
+        double mc = (double) MC_cycles;
+        double m = 0.0;
+        double m2 = 0.0;
+
+        //std::string filename = "1Dmaggy.txt";
+
+        //std::ofstream ofile;
+        //ofile.open(filename); 
+
+        for (int i=0; i<len; i++){
+            m += (mag[i]/mc).real();
+            m2 += (std::conj(mag[i])*mag[i]/mc).real();
+        }
+
+        avg_mag = m;
+        avg_mag_sqrd = m2;
+    
+    }   // End get_magnetization
     ~System_one_D(){
         delete[] state;
         delete[] mag;
