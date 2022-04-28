@@ -284,15 +284,18 @@ class System_two_D
             r = (double) rand()/RAND_MAX;
             // Change spin at position x, y
             if (state[x][y] == 0){
-                state[x][y] = (r > 0.5) ? 1:2;    
+                //state[x][y] = (r > 0.5) ? 1:2;    
+                state[x][y] = 1;    
                 //printf("flip\n");
             }
             else if (state[x][y] == 1){
-                state[x][y] = (r > 0.5) ? 0:2;
+                //state[x][y] = (r > 0.5) ? 0:2;
+                state[x][y] = 2;    
                 //printf("flip\n");
             }
             else if (state[x][y] == 2){
-                state[x][y] = (r > 0.5) ? 0:1;
+                //state[x][y] = (r > 0.5) ? 0:1;
+                state[x][y] = 0;    
                 //printf("flip\n");
             }
 
@@ -352,24 +355,25 @@ class System_two_D
 
     void store_magnetization(){
 
-        std::complex<double> tmp_m;
+        std::complex<double> tmp_m(0.0, 0.0);
         double tmp_m2;
 
         for (int i=0; i<rows; i++){
             for (int j=0; j<cols; j++){
 
-                tmp_m = (LUTmag[ state[i][j] ] / ((double) (rows * cols)));
-                tmp_m2 = (std::conj(tmp_m) * tmp_m).real();
-                //tmp_m2 = abs(tmp_m) * abs(tmp_m);
+                tmp_m += (LUTmag[ state[i][j] ] / ((double) (rows * cols)));
+                //tmp_m2 = (std::conj(tmp_m) * tmp_m).real();
 
-                m += tmp_m;
-                m2 += tmp_m2;
-                m4 += tmp_m2 * tmp_m2;
                 //m = std::exp(arg);
 
                 //mag[i][j] += m;
             }
         }
+        tmp_m2 = abs(tmp_m) * abs(tmp_m);
+
+        m += tmp_m;
+        m2 += tmp_m2;
+        m4 += tmp_m2 * tmp_m2;
     }   // End store_magnetization
 
     void run_MC_simulation(int cycles){
@@ -398,6 +402,10 @@ class System_two_D
 
         //printstate();
         get_magnetizations();
+//        std::cout << "Inside run_MC:" << std::endl;
+//        std::cout << "real average magnetization: " << real_avg_mag << std::endl;
+//        std::cout << "absolute magnetization squared: " << avg_mag_sqrd << std::endl;
+        //printf("\n");
     }   // End run_MC_simulation
 
     void equilibrate(int cycles){
