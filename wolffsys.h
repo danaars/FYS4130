@@ -284,18 +284,18 @@ class System_two_D
             r = (double) rand()/RAND_MAX;
             // Change spin at position x, y
             if (state[x][y] == 0){
-                //state[x][y] = (r > 0.5) ? 1:2;    
-                state[x][y] = 1;    
+                state[x][y] = (r > 0.5) ? 1:2;    // r_maggy_L.txt
+                //state[x][y] = 1;    // maggy_L.txt
                 //printf("flip\n");
             }
             else if (state[x][y] == 1){
-                //state[x][y] = (r > 0.5) ? 0:2;
-                state[x][y] = 2;    
+                state[x][y] = (r > 0.5) ? 0:2;
+                //state[x][y] = 2;    
                 //printf("flip\n");
             }
             else if (state[x][y] == 2){
-                //state[x][y] = (r > 0.5) ? 0:1;
-                state[x][y] = 0;    
+                state[x][y] = (r > 0.5) ? 0:1;
+                //state[x][y] = 0;    
                 //printf("flip\n");
             }
 
