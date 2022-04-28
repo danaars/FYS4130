@@ -372,9 +372,6 @@ in total gives us
     J}+2)^{L-r} + \qty(e^{\beta J}-1)^{L-r}\qty(e^{\beta J}+2)^r}{2\qty(e^{\beta J}-1)^L + \qty(e^{\beta J}+2)^L}
 \end{align*}
 
-"Is this correct?" - Daniel, 24 år \\
-"Yes."  - João, 21 anos
-
 \newpage
 \section*{Exercise 2}
 
@@ -395,7 +392,10 @@ The following results are obtained with 100000 Monte Carlo Cycles.\\
 \includegraphics[width = \textwidth]{hTcorr.png} \\
 \includegraphics[width = \textwidth]{lTcorr.png}
 \\
-Note that the correlation is high 
+Note that the correlation is high for the low temperature case, which is
+expected, as the spins are more coupled. At higher temperatures the correlation
+is only significant over shorter distances (in both directions, due to the
+periodic boundary conditions).
 \\ \\
 \textbf{c)} \\
 \\
@@ -440,6 +440,49 @@ $\expval{\abs{m}^2} = 0$. \\
 \\
 \textbf{e)} \\
 \\
+Assuming that $\Gamma(t, L^{-1})$ holds with $t = \frac{T-T_c}{T_c}$. 
+In general, it is assumed that an RG transformation can be expressed as 
+\begin{align*}
+    f(\qty{\theta}) &= S^Df(\qty{\theta S^{y_\theta}})
+\end{align*}
+where $S \in \mathbb{R}$ is some kind of scaling constant, $\theta$ is a
+set of parameters and $y_\theta$ is some scalar dependent on $\theta$. The $D$
+is related to the dimensionallity of the function,
+but we already know from the definition $\Gamma \equiv
+\frac{\expval{\abs{m}^4}}{\expval{\abs{m}^2}^2}$ that $\Gamma$ is
+dimensionless, such that $D = 0$. \\
+In out case, we then have
+\begin{align*}
+    \Gamma(t, L^{-1}) &= S^0\Gamma(tS^{y_t}, L^{-1}S^{y_{L^{-1}}}) \\
+    &= \Gamma(tS^{y_t}, L^{-1}S^{y_{L^-1}})
+\end{align*}
+Defining $l = \frac{L}{a}$ with $L$ being the system size and $a$ being the
+"distance" used in the RG transformations, we have
+\begin{align}\label{eq1}
+    \Gamma(t, l^{-1}) = \Gamma(tS^{y_t}, l^{-1}S^{y_{L^{-1}}}) 
+\end{align}
+Since we are free to choose the distance, let $a \to aS$ which implies $l \to
+\frac{L}{aS} = lS^{-1} \Rightarrow l^{-1} \to l^{-1}S$. We now see that for the
+equality in \ref{eq1} to hold the arguments must be equal after the
+transformation. That is, $l^{-1} = l^{-1}S^{y_{l^{-1}}} \rightarrow y_{l^{-1}}
+= 1$. The distance $S$ may be chosen, so lets choose it to be $S = l$. We then
+have
+\begin{align*}
+    \Gamma(t, l^{-1}) &= \Gamma(tS^{y_t}, l^{-1}S^{1}) \\
+    &= \Gamma(tl^{y_t}, 1) \\
+    &= \Gamma(tl^{y_t})
+\end{align*}
+Assuming the function is well behaved we may Taylor expand about $tl^{y_t} =
+0$, giving
+\begin{align*}
+    \Gamma(tl^{y_t}) &= \Gamma(0) + tl^{y_t}\Gamma(0) +
+    \frac{\qty(tl^{y_t})^2}{2!}\Gamma(0) + \mathcal{O}(\qty(tl^{y_t})^3)
+\end{align*}
+Now, at $t = 0$ that is $T = T_c$ all higher order terms are equal to zero, and
+the dependency on $l$ (and thus $L$) disappears. This implies that for every
+$L$ at $t=0, T=T_c$ the graphs all have the same value, namely $\Gamma(0)$ and
+hence must cross each other.
+\\ \\
 \textbf{f)} \\
 \\
 For systems of sizes $L = {8, 16, 32}$ the following results of $\Gamma$ were
@@ -448,10 +491,14 @@ obtained\\
 zooming in we have that \\
 \includegraphics[width = \textwidth]{gamma_zoom.png}\\
 The graphs are 100 calculations for $T/J$ from $0$ to $2$. That gives $\Delta
-T/J = \frac{2}{100} = 0.02$ The graphs cross at a distance smaller than $\Delta
+T/J = \frac{2}{100} = 0.02$. The graphs cross at a distance smaller than $\Delta
 T/J$ from the theoretical $T_c/J$. For a finer resolution it then might be the
 case that the graphs cross at exactly $T_c/J$, as they should in theory. \\
 If the graphs dont cross in a single point something must be wrong with our
 assumption that the function $\Gamma$ is a function of only $t$ and $L^{-1}$.
+If we had for example $\Gamma(t, L^{-1}, \chi) \to \Gamma(tl^{y_t}, 1, \chi
+l^{y_\chi})$ the Taylor expansion would gain an additional term, dependent on
+$l$. This implies that if the graphs dont cross, it could be due to a lack of
+parameters for $\Gamma$.
 
 \end{document}
